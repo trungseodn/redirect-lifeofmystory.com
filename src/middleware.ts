@@ -13,9 +13,20 @@ export const onRequest = defineMiddleware((context, next) => {
   }
   else {
     const { pathname, searchParams } = context.url;
-    const newPathname = pathname;
-    const cleanWpUrl = WORDPRESS_URL.endsWith('/') ? WORDPRESS_URL.slice(0, -1) : WORDPRESS_URL;
-    const newUrl = `${cleanWpUrl}${newPathname}?${searchParams.toString()}`;
+    let cleanPath = pathname;
+    if (cleanPath.startsWith('/http://') || cleanPath.startsWith('/https://')) {
+      cleanPath = cleanPath.replace(/^\/https?:\/\/[^\/]+/, '') || '/';
+    }
+
+    let cleanWpUrl = (WORDPRESS_URL || 'https://lifeofmystory.com').trim().replace(/\/+$/, '');
+    const duplicateMatch = cleanWpUrl.match(/^(https?:\/\/[^\/]+)\/https?:\/\/[^\/]+/);
+    if (duplicateMatch) {
+      cleanWpUrl = duplicateMatch[1];
+    }
+
+    const search = searchParams.toString();
+    const query = search ? `?${search}` : '';
+    const newUrl = `${cleanWpUrl}${cleanPath === '/' ? '/' : cleanPath}${query}`;
     const response = context.redirect(newUrl, 307);
     response.headers.set('Referrer-Policy', 'no-referrer');
     return response;
