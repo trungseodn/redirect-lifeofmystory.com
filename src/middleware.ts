@@ -18,7 +18,7 @@ export const onRequest = defineMiddleware((context, next) => {
       cleanPath = cleanPath.replace(/^\/https?:\/\/[^\/]+/, '') || '/';
     }
 
-    let cleanWpUrl = (WORDPRESS_URL || 'https://lifeofmystory.com').trim().replace(/\/+$/, '');
+    let cleanWpUrl = (WORDPRESS_URL || 'https://st.melyweb.net').trim().replace(/\/+$/, '');
     const duplicateMatch = cleanWpUrl.match(/^(https?:\/\/[^\/]+)\/https?:\/\/[^\/]+/);
     if (duplicateMatch) {
       cleanWpUrl = duplicateMatch[1];
