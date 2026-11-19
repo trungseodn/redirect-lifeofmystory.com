@@ -4,5 +4,5 @@ compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
-WORDPRESS_URL = "https://your-wordpress-site.com"
-SITE_NAME = "TSBlog"
+WORDPRESS_URL = "https://lifeofmystory.com"
+SITE_NAME = "Life of My Story"
